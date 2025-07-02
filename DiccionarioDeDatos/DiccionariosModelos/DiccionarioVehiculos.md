@@ -4,7 +4,7 @@
 
 | Campo             | Tipo de Dato | Tamaño | PK  | FK  | Nulo | Único | Restricciones                     | Referencia | Descripción                      |
 |-------------------|-------------|--------|-----|-----|------|-------|-----------------------------------|------------|----------------------------------|
-| CURP              | NVARCHAR    | 18     | Sí  | No  | No   | Sí    | Formato CURP válido               | -          | Identificador único              |
+| CURP              | NCHAR    | 18     | Sí  | No  | No   | Sí    | Formato CURP válido               | -          | Identificador único              |
 | Telefono          | NVARCHAR    | 10     | No  | No  | Sí   | No    | Solo números                     | -          | Teléfono del cliente             |
 | Nombre            | VARCHAR     | 10     | No  | No  | No   | No    | Solo letras                      | -          | Nombre del cliente               |
 | ApellidoPaterno   | VARCHAR     | 10     | No  | No  | No   | No    | Solo letras                      | -          | Apellido paterno                 |
@@ -28,17 +28,19 @@
 |--------------|-------------|--------|-----|-----|------|-------|---------------------|------------------|--------------------|
 | Placa        | NVARCHAR    | 20     | No  | No  | No   | Sí    | Formato válido      | -                | Placa del vehículo |
 | Marca        | NVARCHAR    | 10     | No  | No  | No   | No    | Solo letras         | -                | Marca              |
-| Modelo       | NVARCHAR    | 10     | No  | No  | No   | No    | Letras y números    | -                | Modelo             |
-| Año          | DATE        | -      | No  | No  | No   | No    | <= CURRENT_DATE     | -                | Año fabricación    |
+| Modelo       | NVARCHAR    | 20     | No  | No  | No   | No    | Letras y números    | -                | Modelo  del vehiculo           |
+| Anio          | int        | -      | No  | No  | No   | No    | <= CURRENT_DATE     | -                | Año fabricación    |
 | IdVehiculo   | INT         | -      | Sí  | No  | No   | Sí    | > 0                  | -                | ID vehículo        |
-| IdSucursal   | INT         | -      | No  | Sí  | No   | No    | > 0                  | SUCURSAL(IdSucursal)| Sucursal         |
+| NumSucursal   | INT         | -      | No  | Sí  | No   | No    | > 0                  | SUCURSAL(NumSucursal)| Sucursal en la que se encuentra el vehiculo        |
+| numero de cliente   | INT         | -      | No  | Sí  | No   | No    | > 0                  | cliente()| es el cliente que renta el vehiculo         |
+
 
 **sucursal**
 
 | Campo        | Tipo de Dato | Tamaño | PK  | FK  | Nulo | Único | Restricciones | Referencia | Descripción |
 |--------------|-------------|--------|-----|-----|------|-------|---------------|------------|-------------|
 | NumSucursal  | INT         | -      | Sí  | No  | No   | Sí    | > 0           | -          | Número sucursal |
-| Nombre       | NVARCHAR    | 20     | No  | No  | No   | No    | Solo letras   | -          | Nombre sucursal |
-| Ubicacion    | NVARCHAR    | 40     | No  | No  | No   | No    | -             | -          | Ubicación   |
+| NombreSucursal       | NVARCHAR    | 20     | No  | No  | No   | No    | Solo letras   | -          | Nombre sucursal |
+| Ubicacion    | NVARCHAR    | 20     | No  | No  | No   | No    | -             | -          | Ubicación   |
 | IdSucursal   | INT         | -      | No  | No  | No   | Sí    | > 0           | -          | ID sucursal |
 | IdVehiculo   | INT         | -      | No  | Sí  | No   | No    | > 0           | Vehiculos(IdVehiculo) | Vehículo |
