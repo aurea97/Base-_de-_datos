@@ -1,0 +1,38 @@
+
+CREATE DATABASE SistemaCursos;
+GO
+
+USE SistemaCursos;
+GO
+
+CREATE TABLE ESTUDIANTE (
+    NumEstudiante INT NOT NULL,
+    Nombre NVARCHAR(50),
+    ApellidoPaterno NVARCHAR(50),
+    ApellidoMaterno NVARCHAR(50),
+    Matricula NVARCHAR(50),
+    CONSTRAINT PK_ESTUDIANTE PRIMARY KEY (NumEstudiante)
+);
+GO
+
+
+CREATE TABLE CURSO (
+    numCurso INT NOT NULL,
+    NumberCurso NVARCHAR(30) NOT NULL,
+    CodigoCurso INT NOT NULL,
+    CONSTRAINT PK_CURSO PRIMARY KEY (numCurso)
+);
+GO
+
+
+CREATE TABLE INSCRIPCION (
+    NumEstudiante INT NOT NULL,
+    NumCurso INT NOT NULL,
+    FechaInscription DATE NOT NULL,
+    CONSTRAINT PK_INSCRIPCION PRIMARY KEY (NumEstudiante, NumCurso),
+    CONSTRAINT FK_INSCRIPCION_ESTUDIANTE FOREIGN KEY (NumEstudiante) 
+        REFERENCES ESTUDIANTE(NumEstudiante),
+    CONSTRAINT FK_INSCRIPCION_CURSO FOREIGN KEY (NumCurso) 
+        REFERENCES CURSO(numCurso)
+);
+GO

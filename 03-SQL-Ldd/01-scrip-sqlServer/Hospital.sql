@@ -1,0 +1,43 @@
+
+CREATE DATABASE HospitalDB;
+GO
+
+USE HospitalDB;
+GO
+
+
+CREATE TABLE PACIENTE (
+    IdPaciente NVARCHAR(30) NOT NULL,
+    Nombre NVARCHAR(10) NOT NULL,
+    ApellidoPaterno NVARCHAR(10) NOT NULL,
+    ApellidoMaterno NVARCHAR(10) NOT NULL,
+    Sintomas NVARCHAR(50),
+    CONSTRAINT PK_PACIENTE PRIMARY KEY (IdPaciente)
+);
+GO
+
+
+CREATE TABLE DOCTOR (
+    Cedula INT NOT NULL,
+    Especialidad NVARCHAR(30) NOT NULL,
+    Nombre VARCHAR(10) NOT NULL,
+    ApellidoPaterno VARCHAR(10) NOT NULL,
+    ApellidoMaterno NVARCHAR(10) NOT NULL,
+    CONSTRAINT PK_DOCTOR PRIMARY KEY (Cedula)
+);
+GO
+
+
+CREATE TABLE ATENCION (
+    FechaAtencion DATE NOT NULL,
+    Diagnostico NVARCHAR(50) NOT NULL,
+    NombrePaciente NVARCHAR(10) NOT NULL,
+    Cedula INT NOT NULL,
+    IdPaciente NVARCHAR(20) NOT NULL,
+    CONSTRAINT PK_ATENCION PRIMARY KEY (FechaAtencion, Cedula, IdPaciente),
+    CONSTRAINT FK_ATENCION_DOCTOR FOREIGN KEY (Cedula) 
+        REFERENCES DOCTOR(Cedula),
+    CONSTRAINT FK_ATENCION_PACIENTE FOREIGN KEY (IdPaciente) 
+        REFERENCES PACIENTE(IdPaciente)
+);
+GO

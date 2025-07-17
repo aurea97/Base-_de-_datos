@@ -1,0 +1,9 @@
+﻿id          Nombre               estaus
+----------- -------------------- ------
+1           carnes               D
+1           carnes               A
+
+(2 rows affected)
+
+
+Completion time: 2025-07-09T08:53:14.4658622-06:00
