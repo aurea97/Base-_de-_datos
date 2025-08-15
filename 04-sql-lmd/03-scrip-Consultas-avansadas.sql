@@ -95,10 +95,136 @@ where p.Importe > 25000;
 --Listar los pediso superiores a 25000 mostrando el numero de pedido
 --el nombre del cliente que lo encargo el el nombre del representate asignado al cliente y 
 --el importe 
-Select p.Num_Pedido,c.Empresa,R.Nombre,p.Importe
+use BDEJEMPLO2;
+Go
 
-From Pedidos as p 
-inner join Representantes as r
-on r.Num_Empl=p.Rep
+Select p.Num_Pedido as [Numero de pedido],
+c.Empresa as [Cliente ],
+r.Nombre as [Representante cliente],
+p.Importe as [	i	mporte]
+From Representantes as r 
 inner join Clientes as c
-on c.Num_Cli=p.Cliente;
+on r.Num_Empl= c.Rep_Cli
+inner join Pedidos as p
+on c.Num_Cli=p.Cliente 
+where p.Importe > 25000;
+
+use BDg1Join;
+GO
+
+select * from
+Categoria;
+
+select * from Producto;
+
+--inner join 
+Select * from Categoria as c
+inner join Producto as p
+on c.CategoriaID=p.Categoria;
+
+--left join o left outer join
+--la primera tabla que aparece en la lista en el from es la tabla isquierda 
+
+Select * from Categoria as c
+left outer join Producto as p
+on c.CategoriaID=p.Categoria;
+
+--mostrar todas la categorias ue no tengan productos asignados 
+Select c.CategoriaID,c.Nombre from Categoria as c
+left outer join Producto as p
+on c.CategoriaID=p.Categoria
+where p.Categoria is null;
+
+/*
+right  toma todos los datos de la tabla derecha  t todos los que oinciden con la tabla
+isquierda y nos que no coinsiden los pone en null
+*/
+
+
+Select * from Categoria as c
+right  join Producto as p
+on c.CategoriaID=p.Categoria;
+
+--selecciona todos aquellos productos que no tienen categoria asignada 
+Select p.Nombre as [Nombre del producto],
+p.Precio as [Precio]
+from Categoria as c
+right  join Producto as p
+on c.CategoriaID=p.Categoria
+where Categoria is null;
+
+/*
+full join optiene los datos de la tabla izquierda y derecha y todos 
+las oinsidencias enr¿tre las dos 
+*/
+
+Select * from Categoria as c
+full  join Producto as p
+on c.CategoriaID=p.Categoria;
+
+Select * from Categoria as c
+cross  join Producto as p;
+
+
+select *
+from Categoria as c,
+Producto as p 
+where c.CategoriaID=p.Categoria;
+
+
+/*
+Agregacion
+count(*)- cuenta las final
+count(campo)-cuenta las finas per no los null
+mn()-optiene el valor minimo de un campo
+max()-optiene el mañor maximo de un capo
+avg()-optiene la media aritmetoca o el promedio 
+sum()-optiene el total o la sumatoria
+
+*/
+
+use Northwind;
+
+--cuantos clientes tengo 
+select COUNT(*) as [Numero de clientes] from Customers;
+
+--cuantas ventas se han realizado
+select count(*) from Orders;
+
+--cuantas ventas se realizaron en 1996
+select count(*) from Orders where
+DATEPART(YEAR,OrderDate) = 1996;
+
+--seleccionar la venta de la fecha mas antigua que se hizo 
+
+select MIN(OrderDate) as [Fecha primera venta] from Orders;
+
+--seleccionar el total que se a vendido
+
+select SUM(UnitPrice * Quantity) as [Total de ventas]
+from [Order Details];
+
+--seleccionar el total de ventas entre 1996 y 1997
+select SUM(UnitPrice * Quantity) as [Total de ventas]
+from [Order Details] as ad
+inner join Orders as o
+on o.OrderID= ad.OrderID
+where DATEPART(YEAR,o.OrderDate) between 1996 and 1997;
+
+
+select SUM(UnitPrice * Quantity) as [Total de ventas]
+from [Order Details] as ad
+inner join Orders as o
+on o.OrderID= ad.OrderID
+where DATEPART(YEAR,o.OrderDate) between 1996 and 1997
+and o.CustomerID = 'AROUT';
+
+-- las ventas totales hechas a cad uno de nuestros clientes
+select o.CustomerID as [Clientes],SUM(UnitPrice * Quantity) as [Total de ventas]
+from [Order Details] as ad
+inner join Orders as o
+on o.OrderID= ad.OrderID
+inner join Customers as c
+on c.CustomerID=o.CustomerID
+where DATEPART(YEAR,o.OrderDate) between 1996 and 1997
+Group by o.CustomerID;
